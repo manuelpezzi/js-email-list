@@ -1,22 +1,33 @@
 
-const emailList = document.getElementById('email-list');
-const fetchEmailsButton = document.getElementById('fetch-mails');
+const emailList = document.getElementById('emailList');
 function fetchEmails() {
-    emailList.innerHTML = '';
+    emailList.innerHTML = '<li>caricamento in corso...</li>';
+    const emails = [];
+    let completeRequest = 0;
+
+
     for (let i = 0; i < 10; i++) {
         fetch('https://flynn.boolean.careers/exercises/api/random/mail')
-            .then(response => response, json())
+            .then(response => response.json())
             .then(data => {
-                const emailItem = document.createElement('li');
-                emailItem.className = 'list-group-item';
-                emailItem.textContent = data.response;
-                emailList.appendChild(emailItem);
+
+                emails.push(data.response);
+                completeRequest++;
+
+
+                if (completeRequest === 10) {
+                    emailList.innerHTML = emails.map(email => `<li class-"list-group" >${email}</li>`).join('');
+                }
             })
 
-            .catch(error => console.error(error))
+            .catch(error => {
+                console.error('Errore nel fetch:', error);
+            });
     }
 }
 
+
+fetchEmails();
 /*Descrizione
 Attraverso l'apposita API di Boolean https://flynn.boolean.careers/exercises/api/random/mail generare 10 indirizzi email e stamparli in pagina all'interno di una lista.
 Bonus
