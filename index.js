@@ -1,6 +1,15 @@
 
+const emailList = document.getElementById('email-list');
+const fetchEmailsButton = document.getElementById('fetch-mails');
+function fetchEmails() {
+    emailList.innerHTML = '';
+    for (let i = 0; i < 10; i++) {
+        fetch('https://flynn.boolean.careers/exercises/api/random/mail')
+            .then(response => response, json())
 
 
+    }
+}
 /*Descrizione
 Attraverso l'apposita API di Boolean https://flynn.boolean.careers/exercises/api/random/mail generare 10 indirizzi email e stamparli in pagina all'interno di una lista.
 Bonus
